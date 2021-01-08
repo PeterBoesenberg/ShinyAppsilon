@@ -1,4 +1,5 @@
 library(R6)
+library(gmt)
 
 ShipMap <- R6Class("ShipMap",
                    public = list(
@@ -18,7 +19,7 @@ ShipMap <- R6Class("ShipMap",
                        })
                      },
                      calculate_distance = function(coordinates) {
-                       15
+                       round(geodist(coordinates[1]$LAT, coordinates[1]$LON, coordinates[2]$LAT, coordinates[2]$LON, units="km") * 1000)
                      }
                    ),
                    private = list()
