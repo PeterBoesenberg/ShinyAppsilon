@@ -21,10 +21,13 @@ server <- function(input, output, session) {
     selected_ships <- ships$get_ships_by_type(input$ship_types)
     update_dropdown_input(session, "ships", choices = selected_ships)
   })
+  
   observeEvent(input$ships, {
-    points <- ships$get_longest_distance(input$ships)
-    ship_map$set_markers_on_map(points, output)
-    ship_map$build_distance_note(points, output)
+    if(input$ships != "") {
+      points <- ships$get_longest_distance(input$ships)
+      ship_map$set_markers_on_map(points, output)
+      ship_map$build_distance_note(points, output)
+    }
   })
   
   
