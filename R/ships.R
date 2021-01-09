@@ -23,6 +23,34 @@ Ships <- R6Class("Ships",
         distance <- ship_logs[(max_distance_index - 1):max_distance_index]
       }
       distance
+    },
+    
+    get_ship_type_dropdown_ui = function(id) {
+      ns <- NS(id)
+      dropdown_input(ns("ship_types"), self$ship_types, value = NULL, type = "search selection single")
+    },
+    
+    get_ship_type_dropdown_server = function(input, output, session, selected_ship_type) {
+      observeEvent(input$ship_types, {
+        selected_ship_type(input$ship_types)
+      })
+    },
+    get_ships_dropdown_ui = function(id) {
+      ns <- NS(id)
+      dropdown_input(ns("ships"), NULL, value = NULL, type = "search selection single")
+    },
+    
+    get_ships_dropdown_server = function(input, output, session, selected_ship_type, ship_observations) {
+      observeEvent(selected_ship_type(), {
+        selected_ships <- self$get_ships_by_type(selected_ship_type())
+        update_dropdown_input(session, "ships", choices = selected_ships)
+      })
+      observeEvent(input$ships, {
+        if(input$ships != "") {
+          points <- self$get_longest_distance(input$ships)
+          ship_observations(points)
+        }
+      })
     }
   ),
   private = list(

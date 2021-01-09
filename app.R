@@ -9,33 +9,22 @@ ships <- Ships$new()
 ship_map <- ShipMap$new()
 
 ui <- semanticPage(
-  title = "My page",
-  dropdown_input("ship_types", ships$ship_types, value = NULL, type = "search selection single"),
-  dropdown_input("ships", NULL, value = NULL, type = "search selection single"),
-  leafletOutput("map"),
-  textOutput("note")
+  title = "ShinyAppsilon",
+  ships$get_ship_type_dropdown_ui("type_selection"),
+  ships$get_ships_dropdown_ui("ship_selection"),
+  ship_map$get_map_ui("map"),
 )
 server <- function(input, output, session) {
+  selected_ship_type <- reactiveVal()
+  ship_observations <- reactiveVal()
+
   
-  observeEvent(input$ship_types, {
-    selected_ships <- ships$get_ships_by_type(input$ship_types)
-    update_dropdown_input(session, "ships", choices = selected_ships)
-  })
-  
-  observeEvent(input$ships, {
-    if(input$ships != "") {
-      points <- ships$get_longest_distance(input$ships)
-      ship_map$set_markers_on_map(points, output)
-      ship_map$build_distance_note(points, output)
-    }
-  })
+  callModule(ships$get_ship_type_dropdown_server, "type_selection",  selected_ship_type)
+  callModule(ships$get_ships_dropdown_server, "ship_selection",  selected_ship_type, ship_observations)
   
   
-  output$map <- renderLeaflet({
-    leaflet() %>%
-      addProviderTiles(providers$Stamen.TonerLite,
-                       options = providerTileOptions(noWrap = TRUE)
-      ) 
-  })
+  callModule(ship_map$get_map_server, "map", ship_observations)
+  
+  
 }
 shinyApp(ui, server)
