@@ -19,6 +19,7 @@ ShipMap <- R6Class("ShipMap",
           addMarkers(data = coordinates, ~LON, ~LAT)
       })
     },
+
     #' Build text note saying how many meters a ship has moved between two observations.
     #'
     #' @param coordinates datatable with LAT and LON columns
@@ -31,6 +32,7 @@ ShipMap <- R6Class("ShipMap",
         paste0("Coordinates are ", distance, " meters apart")
       })
     },
+
     #' calculate distance in meter between two observations measured in Lat/Lon.
     #'
     #' @param coordinates datatable with two rows and columns LAT LON
@@ -51,8 +53,15 @@ ShipMap <- R6Class("ShipMap",
     get_map_ui = function(id) {
       ns <- NS(id)
       tagList(
-        leafletOutput(ns("map")),
-        textOutput(ns("note"))
+        card(
+          class = "fluid",
+          h1(class = "header", "Position of longest distance:"),
+          leafletOutput(ns("map")),
+          p(
+            class = "summary",
+            textOutput(ns("note"))
+          )
+        )
       )
     },
 

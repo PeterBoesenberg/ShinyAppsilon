@@ -19,6 +19,4 @@ test_that("ShipMap", {
       expect_true(grepl("id=\"dummy-note\"", result))
     })
   })
-
 })
-

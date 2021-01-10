@@ -51,4 +51,3 @@ test_that("Ships", {
     })
   })
 })
-

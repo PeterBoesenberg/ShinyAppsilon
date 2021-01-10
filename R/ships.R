@@ -55,7 +55,11 @@ Ships <- R6Class("Ships",
     #' @export
     get_ship_type_dropdown_ui = function(id) {
       ns <- NS(id)
-      dropdown_input(ns("ship_types"), self$ship_types, value = NULL, type = "search selection single")
+      tagList(
+        label("Please select a ship type", class = "pointing below basic"),
+        br(),
+        dropdown_input(ns("ship_types"), self$ship_types, value = NULL, type = "search selection single", default_text = "None selected")
+      )
     },
 
     #' Get server-part of ship type dropdown-module.
@@ -81,7 +85,11 @@ Ships <- R6Class("Ships",
     #' @export
     get_ships_dropdown_ui = function(id) {
       ns <- NS(id)
-      dropdown_input(ns("ships"), NULL, value = NULL, type = "search selection single")
+      tagList(
+        label("Please select a ship", class = "pointing below basic"),
+        br(),
+        dropdown_input(ns("ships"), NULL, value = NULL, type = "search selection single", default_text = "None selected")
+      )
     },
 
     #' Get server-part of ships dropdown-module.
