@@ -1,0 +1,12 @@
+name: ShinyAppsilon
+title: ShinyAppsilon
+username:
+account: espresso
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3457259
+bundleId: 4076893
+url: https://espresso.shinyapps.io/ShinyAppsilon/
+when: 1610229018.28509
+asMultiple: FALSE
+asStatic: FALSE

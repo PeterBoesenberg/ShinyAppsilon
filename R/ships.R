@@ -1,3 +1,5 @@
+library(shiny)
+library(shiny.semantic)
 library(R6)
 library(data.table)
 
@@ -34,7 +36,7 @@ Ships <- R6Class("Ships",
     #' @return datatable with two rows, new column "distance" added
     #' @export
     get_longest_distance = function(ship) {
-      distance <- 0
+      distance <- NULL
       if (ship != "") {
         ship_logs <- self$ships[SHIPNAME == ship]
         ship_logs[, distance := round(geodist(LAT, LON, shift(LAT, 1), shift(LON, 1), units = "km") * 1000)]
@@ -110,7 +112,7 @@ Ships <- R6Class("Ships",
     #'
     #' @export
     read = function() {
-      self$ships <- fread("input/ships.csv")
+      self$ships <- fread("data/ships.csv")
     },
     #' Populate value list ship_types based on available ship_types in CSV.
     #'
